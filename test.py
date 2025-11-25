@@ -1,0 +1,48 @@
+import struct
+import datetime
+import time
+
+# x = 59.97652
+# x =
+x = 1764058281
+packed = struct.pack('<I', x) # >d для двойной точности (64 бит)
+hex_representation = packed.hex()
+# print(f'{x} - {hex_representation}')
+# timestamp = datetime.datetime.now()
+# timestamp_unix_fmt = int(timestamp.timestamp())
+# print(f'{timestamp} - {timestamp_unix_fmt} - {datetime.datetime.fromtimestamp(timestamp_unix_fmt)}')
+temp_time = datetime.datetime.fromtimestamp(x)
+temp_timestamp = int(temp_time.timestamp())
+temp_unpacked =  struct.pack('<I',temp_timestamp).hex()
+print(f'{hex_representation} - {x} - {temp_time} - {int(temp_time.timestamp())} - {temp_unpacked}')
+# print(datetime.datetime.now().timestamp())
+# print(datetime.datetime.now())
+# print(time.time())
+# print(time.)
+# timestamp = int(time.time())
+# # timestamp
+# print(timestamp)
+
+
+
+# y = "00000000"
+y = "50196d38"
+# y = "c94ad24e"
+y_in_bytes = bytes.fromhex(y)
+unpacked = struct.unpack('<I', y_in_bytes)[0]
+print(f'{y} - {unpacked} - {datetime.datetime.fromtimestamp(unpacked)}')
+
+y = "100e"
+y_in_bytes = bytes.fromhex(y)
+unpacked = struct.unpack('<h', y_in_bytes)[0]
+print(f'{y} - {unpacked}')
+
+# command = 'EB55000100000030420F00000300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000C8430000C8420000A041C865A8C0000000000000000000000000000000000000000000000000000000000000D36C38100E000000000000FFFFFF00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+command = 'EB55000100000030420F00006700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000C8430000C8420000A041C865A8C0000000000000000000000000000000000000000000000000000000000000D36C38100E000000000000FFFFFF00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+# command = 'EB55'
+int_list = [int(command[i:i+2], 16) for i in range(0, len(command), 2)]
+print(int_list)
+cur_sum = 0
+for cur_int in int_list:
+    cur_sum += cur_int
+print(cur_sum, hex(cur_sum)[-2:])
